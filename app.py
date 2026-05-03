@@ -365,6 +365,7 @@ def get_values(disease, fiscal_year):
     return values
 
 
+
 @app.route("/disease/<path:name>", methods=["GET", "POST"])
 def disease(name):
     name = name.replace("_", " ")
@@ -497,6 +498,20 @@ def export_report(name):
 def home():
     year = request.args.get("year", "2568")
     return render_template("home.html", diseases=DISEASES, year=year)
+@app.route("/disease/<path:name>")
+def disease(name):
+    name = name.replace("_", " ")
+    fiscal_year = int(request.args.get("year", "2568"))
+    values = get_values(name, fiscal_year)
+
+    return render_template(
+        "disease.html",
+        name=name,
+        months=MONTHS,
+        items=get_items_by_disease(name),
+        values=values,
+        fiscal_year=fiscal_year
+    )
 if __name__ == "__main__":
     init_db()
     app.run(host="0.0.0.0", port=5000, debug=True)
