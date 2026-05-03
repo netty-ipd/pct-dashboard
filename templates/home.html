@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>PCT Clinical Dashboard</title>
-
-<style>
 <style>
 *{ box-sizing:border-box; }
 
@@ -14,6 +12,23 @@ body{
     background:linear-gradient(135deg,#eef6f8,#f7fbfc);
     color:#1b3c4a;
 }
+
+/* media query */
+@media(max-width:1000px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .kpi,.grid{
+        grid-template-columns:1fr;
+    }
+    .header h1{
+        font-size:30px;
+    }
+}
+</style>
 
 /* HEADER */
 .header{
