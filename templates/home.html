@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>PCT Clinical Dashboard</title>
+
 <style>
 *{ box-sizing:border-box; }
 
@@ -13,24 +14,6 @@ body{
     color:#1b3c4a;
 }
 
-/* media query */
-@media(max-width:1000px){
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:600px){
-    .kpi,.grid{
-        grid-template-columns:1fr;
-    }
-    .header h1{
-        font-size:30px;
-    }
-}
-</style>
-
-/* HEADER */
 .header{
     background:linear-gradient(120deg,#0d47a1,#0097a7);
     color:white;
@@ -49,12 +32,10 @@ body{
     opacity:.95;
 }
 
-/* CONTAINER */
 .container{
     padding:28px;
 }
 
-/* KPI */
 .kpi{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -82,7 +63,6 @@ body{
     font-weight:bold;
 }
 
-/* TITLE */
 .section-title{
     font-size:24px;
     font-weight:bold;
@@ -90,7 +70,6 @@ body{
     color:#0d47a1;
 }
 
-/* GRID */
 .grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -121,7 +100,6 @@ body{
     box-shadow:0 14px 28px rgba(0,0,0,0.15);
 }
 
-/* FOOTER */
 .footer{
     text-align:center;
     margin-top:30px;
@@ -129,30 +107,13 @@ body{
     font-size:14px;
 }
 
-/* RESPONSIVE */
 @media(max-width:1000px){
     .grid{ grid-template-columns:repeat(2,1fr); }
 }
 
 @media(max-width:600px){
     .kpi,.grid{ grid-template-columns:1fr; }
-}
-</style>
-
-@media(max-width:1000px){
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:600px){
-    .kpi,.grid{
-        grid-template-columns:1fr;
-    }
-
-    .header h1{
-        font-size:30px;
-    }
+    .header h1{ font-size:30px; }
 }
 </style>
 </head>
@@ -183,16 +144,12 @@ body{
     <div class="grid">
         {% for d in diseases %}
         <a href="/disease/{{ d|replace(' ', '_') }}?year={{ year }}">
-            <div class="disease">
-                {{ d }}
-            </div>
+            <div class="disease">{{ d }}</div>
         </a>
         {% endfor %}
     </div>
 
-    <div class="footer">
-        PCT Report System
-    </div>
+    <div class="footer">PCT Report System</div>
 
 </div>
 
