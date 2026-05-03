@@ -497,7 +497,10 @@ def export_report(name):
         mimetype="text/csv; charset=utf-8",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
-
+@app.route("/")
+def home():
+    year = request.args.get("year", "2568")
+    return render_template("home.html", diseases=DISEASES, year=year)
 if __name__ == "__main__":
     init_db()
     app.run(host="0.0.0.0", port=5000, debug=True)
