@@ -347,7 +347,26 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+def init_db():
+    conn = sqlite3.connect(DB_NAME)
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS pct_values (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            fiscal_year INTEGER NOT NULL,
+            disease TEXT NOT NULL,
+            indicator TEXT NOT NULL,
+            month_index INTEGER NOT NULL,
+            value INTEGER,
+            created_at TEXT,
+            updated_at TEXT,
+            UNIQUE(fiscal_year, disease, indicator, month_index)
+        )
+    """)
+    conn.commit()
+    conn.close()
 
+init_db()
 def get_values(disease, fiscal_year):
     conn = sqlite3.connect(DB_NAME)
     cur = conn.cursor()
@@ -494,6 +513,7 @@ def export_report(name):
         mimetype="text/csv; charset=utf-8",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
+
 @app.route("/")
 def home():
     year = request.args.get("year", "2568")
