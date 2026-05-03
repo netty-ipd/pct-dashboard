@@ -364,10 +364,6 @@ def get_values(disease, fiscal_year):
         values[(indicator, month_index)] = value
     return values
 
-@app.route("/")
-def home():
-    year = request.args.get("year", "2568")
-    return render_template("home.html", diseases=DISEASES, year=year)
 
 @app.route("/disease/<path:name>", methods=["GET", "POST"])
 def disease(name):
