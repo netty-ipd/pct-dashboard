@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>{{ name }}</title>
+
+<style>
+body{
+    font-family:Tahoma;
+    margin:0;
+    background:#eaf4f1;
+}
+
+.header{
+    background:#0f8a5f;
+    color:white;
+    padding:25px;
+    font-size:28px;
+}
+
+.container{
+    padding:20px;
+}
+
+.topbar{
+    margin-bottom:15px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+select, .btn, .export-btn{
+    padding:10px 16px;
+    font-size:16px;
+    border-radius:8px;
+}
+
+.btn{
+    background:#0f8a5f;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+.export-btn{
+    background:#1565c0;
+    color:white;
+    text-decoration:none;
+}
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+.table th{
+    background:#0f8a5f;
+    color:white;
+    padding:10px;
+    position:sticky;
+    top:0;
+    z-index:2;
+}
+
+.table td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:center;
+}
+
+.table input{
+    width:80px;
+    padding:6px;
+    font-size:16px;
+    text-align:center;
+}
+
+.name-col{
+    text-align:left;
+    font-weight:bold;
+}
+
+.total-col{
+    font-weight:bold;
+    color:#0f8a5f;
+    background:#f3fff8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+{{ name }} Dashboard ปี {{ fiscal_year }}
+</div>
+
+<div class="container">
+
+<form method="POST">
+
+<div class="topbar">
+    <label>ปีงบประมาณ</label>
+
+    <select name="fiscal_year" onchange="window.location.href='?year=' + this.value">
+        {% for y in range(2568, 2581) %}
+            <option value="{{ y }}" {% if fiscal_year == y %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+
+    <button class="btn" type="submit">บันทึกข้อมูล</button>
+
+    <a class="export-btn" href="/export_excel/{{ name|replace(' ', '_') }}?year={{ fiscal_year }}">
+        ส่งออก Excel
+    </a>
+</div>
+
+<table class="table">
+<tr>
+    <th>ลำดับ</th>
+    <th>ตัวชี้วัด</th>
+    {% for m in months %}
+    <th>{{ m }}</th>
+    {% endfor %}
+    <th>รวมทั้งปี</th>
+</tr>
+
+{% for item in items %}
+
+<tr>
+    <td>{{ loop.index }}</td>
+    <td class="name-col">{{ item }}</td>
+
+    {% set total = namespace(value=0) %}
+
+    {% for m in range(12) %}
+        {% set v = values.get((item, m)) %}
+        {% if v is not none %}
+            {% set total.value = total.value + v %}
+        {% endif %}
+
+        <td>
+            <input type="number"
+                   name="{{ item }}_{{ m }}"
+                   value="{{ '' if v is none else v }}">
+        </td>
+    {% endfor %}
+
+    <td class="total-col">{{ total.value }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</form>
+
+<br>
+<a href="/">⬅ กลับหน้าแรก</a>
+
+</div>
+
+</body>
+</html>

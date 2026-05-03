@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>PCT Clinical Dashboard</title>
+
+<style>
+<style>
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    font-family:Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#eef6f8,#f7fbfc);
+    color:#1b3c4a;
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(120deg,#0d47a1,#0097a7);
+    color:white;
+    padding:38px 42px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.header h1{
+    margin:0;
+    font-size:40px;
+}
+
+.header p{
+    margin:8px 0 0;
+    font-size:18px;
+    opacity:.95;
+}
+
+/* CONTAINER */
+.container{
+    padding:28px;
+}
+
+/* KPI */
+.kpi{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+    margin-bottom:32px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    border:1px solid #e2eef2;
+}
+
+.card h2{
+    margin:0;
+    font-size:38px;
+    color:#007c91;
+}
+
+.card p{
+    margin-top:8px;
+    font-weight:bold;
+}
+
+/* TITLE */
+.section-title{
+    font-size:24px;
+    font-weight:bold;
+    margin:10px 0 20px;
+    color:#0d47a1;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.grid a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.disease{
+    background:white;
+    border-radius:18px;
+    padding:24px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    box-shadow:0 8px 22px rgba(0,0,0,0.08);
+    border:1px solid #e2eef2;
+    transition:.2s;
+}
+
+.disease:hover{
+    background:linear-gradient(120deg,#0d47a1,#00acc1);
+    color:white;
+    transform:translateY(-5px);
+    box-shadow:0 14px 28px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+.footer{
+    text-align:center;
+    margin-top:30px;
+    color:#6b7f86;
+    font-size:14px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+    .grid{ grid-template-columns:repeat(2,1fr); }
+}
+
+@media(max-width:600px){
+    .kpi,.grid{ grid-template-columns:1fr; }
+}
+</style>
+
+@media(max-width:1000px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .kpi,.grid{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>PCT Clinical Dashboard</h1>
+    <p>ระบบรายงานตัวชี้วัดกลุ่มโรคสำคัญ</p>
+</div>
+
+<div class="container">
+
+    <div class="kpi">
+        <div class="card">
+            <h2>{{ diseases|length }}</h2>
+            <p>จำนวนโรค</p>
+        </div>
+
+        <div class="card">
+            <h2>{{ year }}</h2>
+            <p>ปีงบประมาณ</p>
+        </div>
+    </div>
+
+    <div class="section-title">รายการกลุ่มโรค</div>
+
+    <div class="grid">
+        {% for d in diseases %}
+        <a href="/disease/{{ d|replace(' ', '_') }}?year={{ year }}">
+            <div class="disease">
+                {{ d }}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="footer">
+        PCT Report System
+    </div>
+
+</div>
+
+</body>
+</html>
